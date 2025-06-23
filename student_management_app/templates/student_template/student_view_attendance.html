@@ -1,0 +1,204 @@
+{% extends 'student_template/base_template.html' %}
+
+{% block page_title %}
+View Attendance Data
+{% endblock page_title %}
+
+{% block main_content %}
+{% load static %}
+
+<section class="content">
+	<div class="container-fluid">
+		
+		<div class="row">
+			<div class="col-md-12">
+				<!-- general form elements -->
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">View Attendance</h3>
+					</div>
+					<!-- /.card-header -->
+					
+					{% comment %} Display Messages {% endcomment %}
+					{% if messages %}
+					<div class="messages">
+						{% for message in messages %}
+						<div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %} alert-dismissible fade show" role="alert">
+							{{ message }}
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}
+					
+					<form method="POST" action="{% url 'student_view_attendance_post' %}" class="attendance-form">
+						{% csrf_token %}
+						
+						<div class="card-body">
+							
+							<div class="form-group">
+								<label>Select Subject</label>
+								<select class="form-control custom-select" name="subject" id="subject">
+									{% for subject in subjects %}
+									<option value="{{ subject.id }}">{{ subject.subject_name }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>Start Date</label>
+										<input type="date" class="form-control" name="start_date" required />
+									</div>
+								</div>
+								
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>End Date</label>
+										<input type="date" class="form-control" name="end_date" required/>
+									</div>
+								</div>
+							
+							</div>
+						
+						
+						</div>
+						<!-- /.card-body -->
+						
+						<div class="card-footer">
+							<button type="submit" class="btn btn-primary" id="fetch_student">
+								<i class="fas fa-calendar-check mr-2"></i>Fetch Attendance
+							</button>
+						</div>
+						
+						{% comment %} Displaying Students Here {% endcomment %}
+						
+						<div class="card-footer" id="student_data">
+						</div>
+				
+				</div>
+				
+				</form>
+				<!-- /.card -->
+			
+			</div>
+		</div>
+	
+	</div><!-- /.container-fluid -->
+</section>
+
+<style>
+	.card {
+		background: rgba(255, 255, 255, 0.9);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		border-radius: 16px;
+		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+		overflow: hidden;
+	}
+
+	.card-header {
+		background: transparent;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+		padding: 1.5rem;
+	}
+
+	.card-title {
+		color: #1E293B;
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin: 0;
+	}
+
+	.card-body {
+		padding: 1.5rem;
+	}
+
+	.messages {
+		padding: 1rem 1.5rem 0;
+	}
+
+	.alert {
+		border: none;
+		border-radius: 8px;
+	}
+
+	.alert-success {
+		background: rgba(5, 150, 105, 0.1);
+		color: #059669;
+	}
+
+	.alert-danger {
+		background: rgba(239, 68, 68, 0.1);
+		color: #EF4444;
+	}
+
+	.form-group {
+		margin-bottom: 1.5rem;
+	}
+
+	.form-group label {
+		color: #64748B;
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		display: block;
+	}
+
+	.form-control {
+		background: rgba(255, 255, 255, 0.9);
+		border: 1px solid #E2E8F0;
+		border-radius: 8px;
+		padding: 0.75rem 1rem;
+		color: #1E293B;
+		transition: all 0.2s ease;
+	}
+
+	.form-control:focus {
+		border-color: #4F46E5;
+		box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+	}
+
+	.custom-select {
+		background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%234F46E5' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+		background-repeat: no-repeat;
+		background-position: right 1rem center;
+		background-size: 16px 12px;
+		padding-right: 2.5rem;
+	}
+
+	.card-footer {
+		background: transparent;
+		border-top: 1px solid rgba(255, 255, 255, 0.18);
+		padding: 1.5rem;
+	}
+
+	.btn-primary {
+		background: #4F46E5;
+		border: none;
+		border-radius: 8px;
+		padding: 0.75rem 1.5rem;
+		font-weight: 500;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		transition: all 0.2s ease;
+	}
+
+	.btn-primary:hover {
+		background: #4338CA;
+		transform: translateY(-1px);
+	}
+
+	.btn-primary i {
+		font-size: 1.1rem;
+	}
+</style>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+{% endblock custom_js %}

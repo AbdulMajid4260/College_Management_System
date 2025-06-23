@@ -1,0 +1,373 @@
+{% extends 'staff_template/base_template.html' %}
+
+{% block page_title %}
+    Staff Home
+{% endblock page_title %}
+
+{% block main_content %}
+{% load static %}
+
+<div class="container-fluid">
+    <!-- Dashboard Overview Section -->
+    <div class="dashboard-overview mb-4">
+        <div class="icon-box">
+            <i class="fas fa-graduation-cap text-primary"></i>
+        </div>
+        <div class="overview-content">
+            <h2 class="overview-title">Dashboard Overview</h2>
+            <p class="overview-welcome">Welcome back, {{ user.first_name }}</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards Section -->
+    <div class="row">
+        <!-- Students Card -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stats-card bg-gradient-info">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-1">Students Under Me</h6>
+                            <h2 class="text-white mb-0">{{ students_count }}</h2>
+                        </div>
+                        <div class="stats-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <a href="{% url 'staff_take_attendance' %}" class="text-white">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance Card -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stats-card bg-gradient-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-1">Total Attendance</h6>
+                            <h2 class="text-white mb-0">{{ attendance_count }}</h2>
+                        </div>
+                        <div class="stats-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                    </div>
+                    <a href="{% url 'staff_take_attendance' %}" class="text-white">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leave Card -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stats-card bg-gradient-warning">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-1">Total Leave</h6>
+                            <h2 class="text-white mb-0">{{ leave_count }}</h2>
+                        </div>
+                        <div class="stats-icon">
+                            <i class="fas fa-calendar-minus"></i>
+                        </div>
+                    </div>
+                    <a href="{% url 'staff_apply_leave' %}" class="text-white">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subjects Card -->
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stats-card bg-gradient-danger">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-white mb-1">Total Subjects</h6>
+                            <h2 class="text-white mb-0">{{ subject_count }}</h2>
+                        </div>
+                        <div class="stats-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                    <a href="#" class="text-white">View Details <i class="fas fa-arrow-right ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row">
+        <!-- Leave Status Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Leave Status Chart</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subjects Attendance Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Subjects Attendance Chart</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Attendance Data -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Student Attendance Overview</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="barChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dashboard-overview {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .icon-box {
+        width: 64px;
+        height: 64px;
+        background: rgba(79, 70, 229, 0.1);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-box i {
+        font-size: 2rem;
+        color: #4f46e5;
+    }
+
+    .overview-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin: 0;
+    }
+
+    .overview-welcome {
+        font-size: 1.1rem;
+        color: #666;
+        margin: 0;
+    }
+
+    .stats-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.2s;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stats-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .stats-icon i {
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .card-header {
+        background: white;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        color: #1a1a1a;
+        font-weight: 600;
+    }
+
+    .bg-gradient-info {
+        background: linear-gradient(45deg, #0ea5e9, #38bdf8);
+    }
+
+    .bg-gradient-success {
+        background: linear-gradient(45deg, #22c55e, #4ade80);
+    }
+
+    .bg-gradient-warning {
+        background: linear-gradient(45deg, #eab308, #facc15);
+    }
+
+    .bg-gradient-danger {
+        background: linear-gradient(45deg, #ef4444, #f87171);
+    }
+</style>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+    $(document).ready(function(){
+        // Pie Chart Configuration
+        var pieData = {
+            labels: ['Leave', 'Attendance'],
+            datasets: [{
+                data: [{{ leave_count }}, {{ attendance_count }}],
+                backgroundColor: ['#f87171', '#4ade80'],
+                borderWidth: 0
+            }]
+        };
+
+        var pieOptions = {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        };
+
+        new Chart($('#pieChart').get(0).getContext('2d'), {
+            type: 'pie',
+            data: pieData,
+            options: pieOptions
+        });
+
+        // Bar Chart Configuration
+        var attendance_list = {{ attendance_list }};
+        var subject_list = {{ subject_list|safe }};
+
+        var barData = {
+            labels: subject_list,
+            datasets: [{
+                label: 'Subject Attendance',
+                backgroundColor: '#4f46e5',
+                borderColor: '#4f46e5',
+                borderWidth: 0,
+                borderRadius: 4,
+                data: attendance_list
+            }]
+        };
+
+        var barOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: true,
+                        color: 'rgba(0,0,0,0.05)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        new Chart($('#barChart').get(0).getContext('2d'), {
+            type: 'bar',
+            data: barData,
+            options: barOptions
+        });
+
+        // Student Attendance Chart
+        var student_list = {{ student_list|safe }};
+        var attendance_present_list = {{ attendance_present_list }};
+        var attendance_absent_list = {{ attendance_absent_list }};
+
+        var studentData = {
+            labels: student_list,
+            datasets: [
+                {
+                    label: 'Present',
+                    backgroundColor: '#4ade80',
+                    borderColor: '#4ade80',
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    data: attendance_present_list
+                },
+                {
+                    label: 'Absent',
+                    backgroundColor: '#f87171',
+                    borderColor: '#f87171',
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    data: attendance_absent_list
+                }
+            ]
+        };
+
+        var studentChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        display: true,
+                        color: 'rgba(0,0,0,0.05)'
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        };
+
+        new Chart($('#barChart2').get(0).getContext('2d'), {
+            type: 'bar',
+            data: studentData,
+            options: studentChartOptions
+        });
+    });
+</script>
+{% endblock custom_js %}

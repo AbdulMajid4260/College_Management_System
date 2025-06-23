@@ -1,0 +1,240 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-light-primary elevation-2">
+  <!-- Brand Logo -->
+  <a href="{% url 'admin_home' %}" class="brand-link">
+    <i class="fas fa-graduation-cap brand-image text-primary"></i>
+    <span class="brand-text font-weight-bold">AMSMS</span>
+  </a>
+
+  <div class="sidebar">
+    <!-- Admin Profile Section -->
+    <div class="user-profile">
+      <div class="profile-icon">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <div class="profile-info">
+        <h6 class="profile-name">{{ user.first_name }} {{ user.last_name }}</h6>
+        <span class="profile-role">Administrator</span>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-4">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          {% url 'admin_home' as admin_home %}
+          <a href="{{ admin_home }}" class="nav-link {% if request.path == admin_home %} active {% endif %}">
+            <i class="nav-icon fas fa-th-large"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'add_staff' as add_staff %}
+          <a href="{{ add_staff }}" class="nav-link {% if request.path == add_staff %} active {% endif %}">
+            <i class="nav-icon fas fa-user-tie"></i>
+            <p>Add Staff</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'manage_staff' as manage_staff %}
+          <a href="{{ manage_staff }}" class="nav-link {% if request.path == manage_staff %} active {% endif %}">
+            <i class="nav-icon fas fa-users-cog"></i>
+            <p>Manage Staff</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'add_student' as add_student %}
+          <a href="{{ add_student }}" class="nav-link {% if request.path == add_student %} active {% endif %}">
+            <i class="nav-icon fas fa-user-graduate"></i>
+            <p>Add Student</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'manage_student' as manage_student %}
+          <a href="{{ manage_student }}" class="nav-link {% if request.path == manage_student %} active {% endif %}">
+            <i class="nav-icon fas fa-user-friends"></i>
+            <p>Manage Students</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'add_course' as add_course %}
+          <a href="{{ add_course }}" class="nav-link {% if request.path == add_course %} active {% endif %}">
+            <i class="nav-icon fas fa-graduation-cap"></i>
+            <p>Add Course</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'manage_course' as manage_course %}
+          <a href="{{ manage_course }}" class="nav-link {% if request.path == manage_course %} active {% endif %}">
+            <i class="nav-icon fas fa-tasks"></i>
+            <p>Manage Courses</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'add_subject' as add_subject %}
+          <a href="{{ add_subject }}" class="nav-link {% if request.path == add_subject %} active {% endif %}">
+            <i class="nav-icon fas fa-book"></i>
+            <p>Add Subject</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'manage_subject' as manage_subject %}
+          <a href="{{ manage_subject }}" class="nav-link {% if request.path == manage_subject %} active {% endif %}">
+            <i class="nav-icon fas fa-book-open"></i>
+            <p>Manage Subjects</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'manage_session' as manage_session %}
+          <a href="{{ manage_session }}" class="nav-link {% if request.path == manage_session %} active {% endif %}">
+            <i class="nav-icon fas fa-calendar-alt"></i>
+            <p>Manage Sessions</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'admin_view_attendance' as admin_view_attendance %}
+          <a href="{{ admin_view_attendance }}" class="nav-link {% if request.path == admin_view_attendance %} active {% endif %}">
+            <i class="nav-icon fas fa-calendar-check"></i>
+            <p>View Attendance</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'admin_view_leave' as admin_view_leave %}
+          <a href="{{ admin_view_leave }}" class="nav-link {% if request.path == admin_view_leave %} active {% endif %}">
+            <i class="nav-icon fas fa-envelope"></i>
+            <p>Leave Applications</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'admin_view_feedback' as admin_view_feedback %}
+          <a href="{{ admin_view_feedback }}" class="nav-link {% if request.path == admin_view_feedback %} active {% endif %}">
+            <i class="nav-icon fas fa-comment-dots"></i>
+            <p>View Feedback</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <style>
+    .main-sidebar {
+      background: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    }
+
+    .brand-link {
+      border: none !important;
+      padding: 1.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-link .brand-image {
+      float: none;
+      max-height: none;
+      font-size: 1.5rem;
+    }
+
+    .brand-link .brand-text {
+      font-size: 1.25rem;
+      color: #4F46E5;
+    }
+
+    .user-profile {
+      padding: 1.5rem 1rem;
+      margin: 1rem;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .profile-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-name {
+      margin: 0;
+      font-weight: 600;
+      color: #1E293B;
+      font-size: 1rem;
+    }
+
+    .profile-role {
+      color: #64748B;
+      font-size: 0.875rem;
+    }
+
+    .nav-sidebar {
+      padding: 0 1rem;
+    }
+
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-link {
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #64748B !important;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(79, 70, 229, 0.1);
+      color: #4F46E5 !important;
+    }
+
+    .nav-link.active {
+      background: #4F46E5 !important;
+      color: white !important;
+    }
+
+    .nav-link i {
+      font-size: 1.25rem;
+      width: 1.25rem;
+      text-align: center;
+    }
+
+    .nav-link p {
+      margin: 0;
+      font-weight: 500;
+    }
+  </style>
+</aside>

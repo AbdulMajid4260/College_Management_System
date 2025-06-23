@@ -1,0 +1,176 @@
+{% load static %}
+
+<aside class="main-sidebar sidebar-light-primary elevation-2">
+  <!-- Brand Logo -->
+  <a href="{% url 'student_home' %}" class="brand-link">
+    <i class="fas fa-graduation-cap brand-image text-primary"></i>
+    <span class="brand-text font-weight-bold">AMSMS</span>
+  </a>
+
+  <div class="sidebar">
+    <!-- Student Profile Section -->
+    <div class="user-profile">
+      <div class="profile-icon">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <div class="profile-info">
+        <h6 class="profile-name">{{ user.first_name }} {{ user.last_name }}</h6>
+        <span class="profile-role">Student</span>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-4">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          {% url 'student_home' as student_home %}
+          <a href="{{ student_home }}" class="nav-link {% if request.path == student_home %} active {% endif %}">
+            <i class="nav-icon fas fa-th-large"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'student_view_attendance' as student_view_attendance %}
+          <a href="{{ student_view_attendance }}" class="nav-link {% if request.path == student_view_attendance %} active {% endif %}">
+            <i class="nav-icon fas fa-calendar-check"></i>
+            <p>View Attendance</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'student_view_result' as student_view_result %}
+          <a href="{{ student_view_result }}" class="nav-link {% if request.path == student_view_result %} active {% endif %}">
+            <i class="nav-icon fas fa-chart-line"></i>
+            <p>View Result</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'student_apply_leave' as student_apply_leave %}
+          <a href="{{ student_apply_leave }}" class="nav-link {% if request.path == student_apply_leave %} active {% endif %}">
+            <i class="nav-icon fas fa-calendar-plus"></i>
+            <p>Apply for Leave</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          {% url 'student_feedback' as student_feedback %}
+          <a href="{{ student_feedback }}" class="nav-link {% if request.path == student_feedback %} active {% endif %}">
+            <i class="nav-icon fas fa-comment-dots"></i>
+            <p>Send Feedback</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <style>
+    .main-sidebar {
+      background: rgba(255, 255, 255, 0.9) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(255, 255, 255, 0.18) !important;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    }
+
+    .brand-link {
+      border: none !important;
+      padding: 1.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-link .brand-image {
+      float: none;
+      max-height: none;
+      font-size: 1.5rem;
+    }
+
+    .brand-link .brand-text {
+      font-size: 1.25rem;
+      color: #4F46E5;
+    }
+
+    .user-profile {
+      padding: 1.5rem 1rem;
+      margin: 1rem;
+      background: rgba(79, 70, 229, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .profile-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .profile-icon i {
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-name {
+      margin: 0;
+      font-weight: 600;
+      color: #1E293B;
+      font-size: 1rem;
+    }
+
+    .profile-role {
+      color: #64748B;
+      font-size: 0.875rem;
+    }
+
+    .nav-sidebar {
+      padding: 0 1rem;
+    }
+
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-link {
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #64748B !important;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+      background: rgba(79, 70, 229, 0.1);
+      color: #4F46E5 !important;
+    }
+
+    .nav-link.active {
+      background: #4F46E5 !important;
+      color: white !important;
+    }
+
+    .nav-link i {
+      font-size: 1.25rem;
+      width: 1.25rem;
+      text-align: center;
+    }
+
+    .nav-link p {
+      margin: 0;
+      font-weight: 500;
+    }
+  </style>
+</aside>
